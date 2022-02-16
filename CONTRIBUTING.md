@@ -29,3 +29,7 @@ Custom Information - if you're copying this template for the first time you can 
 - [Mailing list](URL)
 
 -->
+
+<!---
+TODO: Add a user guide doc for how to contribute in-tree and out-of-tree functions.
+-->
