@@ -6,11 +6,88 @@ _As contributors and maintainers of this project, and in the interest of fosteri
 
 ## Getting Started
 
-We have full documentation on how to get started contributing here:
+### Repo layout
 
-<!---
-If your repo has certain guidelines for contribution, put them here ahead of the general k8s resources
--->
+```
+├── publishers # Home for all functions metadata
+│   ├── communities
+│   │   ├── kustomize
+│   │   │   ├── fn-foo
+│   │   │   │   └── krm-function-metadata.yaml
+│   │   │   ├── fn-bar
+│   │   │   └── OWNERS # OWNERS of the publisher
+│   │   ├── kubeflow
+│   │   ├── sig-cli
+│   │   └── OWNERS # OWNERS to approve new community publishers
+│   ├── companies
+│   │   ├── apple
+│   │   │   ├── fn-baz
+│   │   │   └── OWNERS # OWNERS of the publisher
+│   │   ├── google
+│   │   └── OWNERS # OWNERS to approve new company publishers
+│   ├── github-orgs
+│   └── individuals
+├── krm-functions # Home for in-tree functions source code
+│   ├── Makefile
+│   ├── kustomize
+│   │   ├── fn-foo
+│   │   ├── README.md
+│   │   └── OWNERS # OWNERS to approve code change to the function
+│   └── sig-cli
+├── site 
+├── Makefile
+└── OWNERS
+```
+
+## Contributing in-tree KRM function source code
+
+This section discusses how to contribute KRM function source code, so that it can be managed and released by this repo.
+
+For each in-tree function, the implementation is in the `krm-functions/` directory. Each publisher will need to create their own subdirectory `krm-functions/{PUBLISHER}/` 
+in this directory to store their functions source code. For example, SIG-CLI sponsored functions are located
+under `krm-functions/sig-cli/`.
+
+Each function must be in its own subdirectory `krm-functions/{PUBLISHER}/{FUNCTION NAME}/`. This directory should 
+contain: 
+- An OWNERS file to approve code changes to the function.
+- A README.md file to provide a user guide for the function.
+- Source code and unit tests.
+- A Dockerfile that describes how to build the function image.
+- An `examples/` directory. Examples that will serve both as examples for functions and as e2e tests. Each example should have its
+  own subdirectory `krm-functions/{PUBLISHER}/{FUNCTION NAME}/examples/{EXAMPLE_NAME}/`, and this directory should contain:
+  - A README.md file that serves as a guide for the example.
+  - A subdirectory `.expected`. This should contain two files:
+    - `exec.sh`: A script that will run your example. This script will be run on the example directory it is in. This can
+      be something as simple as `kustomize build --enable-alpha-plugins > resources.yaml`.
+    - `diff.patch`: This file should contain the expected diff between the original example directory files and the files 
+      after `exec.sh` is run.
+  - Any additional files needed for your examples to run. For example, if you are running `kustomize build` in your `exec.sh`
+    script, you will need a kustomization file. 
+        
+An example of this is SIG-CLI's [render-helm-chart](https://github.com/kubernetes-sigs/krm-functions-registry/tree/main/krm-functions/sig-cli/render-helm-chart) 
+function. 
+
+## Publishing KRM function metadata in-tree and out-of-tree functions
+
+This section describes how to publish KRM function metadata, independent of where the source code lives. 
+
+For each function's metadata, the files are in the `publishers/` directory. This has four subdirectories: `publishers/communities/`, `publishers/companies/`, 
+`publishers/github-orgs`, and `publishers/individuals`. Depending on which category the publisher falls under, they will need
+to create their own directory under one of these four subdirectories to publish their function metadata. For example, SIG-CLI
+function metadata is under `publishers/communities/sig-cli/`. 
+
+Within the publisher's directory, there should be:
+- An OWNERS file to approve KRM function metadata changes for the publisher.
+- A directory for each published KRM function. This KRM function directory should contain a single file,
+  `krm-function-metadata.yaml`. This file should be a kubernetes object of type KRMFunctionDefinition, 
+  which is defined in the [Catalog KEP].
+    
+An example of this is SIG-CLI's [render-helm-chart](https://github.com/kubernetes-sigs/krm-functions-registry/tree/main/publishers/communities/sig-cli/render-helm-chart) 
+function metadata.
+
+## General Kubernetes Contributing docs
+
+We have full documentation on how to get started contributing here:
 
 - [Contributor License Agreement](https://git.k8s.io/community/CLA.md) Kubernetes projects require that you sign a Contributor License Agreement (CLA) before we can accept your pull requests
 - [Kubernetes Contributor Guide](https://git.k8s.io/community/contributors/guide) - Main contributor documentation, or you can just jump directly to the [contributing section](https://git.k8s.io/community/contributors/guide#contributing)
@@ -20,16 +97,7 @@ If your repo has certain guidelines for contribution, put them here ahead of the
 
 - [Mentoring Initiatives](https://git.k8s.io/community/mentoring) - We have a diverse set of mentorship programs available that are always looking for volunteers!
 
-<!---
-Custom Information - if you're copying this template for the first time you can add custom content here, for example:
+[Catalog KEP]: https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/2906-kustomize-function-catalog#function-metadata-schema
 
 ## Contact Information
-
-- [Slack channel](https://kubernetes.slack.com/messages/kubernetes-users) - Replace `kubernetes-users` with your slack channel string, this will send users directly to your channel. 
-- [Mailing list](URL)
-
--->
-
-<!---
-TODO: Add a user guide doc for how to contribute in-tree and out-of-tree functions.
--->
+- [Slack channel](https://kubernetes.slack.com/messages/sig-cli-krm-functions)
