@@ -167,7 +167,6 @@ func (f *helmChartInflatorFunction) RenderHelmChartArgs(c []byte) (err error) {
 		}
 		f.plugins = append(f.plugins, p)
 	}
-
 	return nil
 }
 

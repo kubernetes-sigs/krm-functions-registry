@@ -15,9 +15,9 @@
 package tests
 
 import (
-  "testing"
+	"testing"
 
-  "github.com/GoogleContainerTools/kpt/pkg/test/runner"
+	"github.com/GoogleContainerTools/kpt/pkg/test/runner"
 )
 
 // TestExamples runs all in-tree examples in the ../krm-functions/sig-cli directory as tests.

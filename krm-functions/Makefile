@@ -7,3 +7,7 @@
 # Otherwise, just build that function locally.
 build-local:
 	./scripts/build-local.sh $(FUNCTION_NAME)
+
+# Run all unit tests for in-tree functions
+unit-test:
+	./scripts/unit-test.sh
