@@ -10,23 +10,14 @@ _As contributors and maintainers of this project, and in the interest of fosteri
 
 ```
 ├── publishers # Home for all functions metadata
-│   ├── communities
-│   │   ├── kustomize
-│   │   │   ├── fn-foo
-│   │   │   │   └── krm-function-metadata.yaml
-│   │   │   ├── fn-bar
-│   │   │   └── OWNERS # OWNERS of the publisher
-│   │   ├── kubeflow
-│   │   ├── sig-cli
-│   │   └── OWNERS # OWNERS to approve new community publishers
-│   ├── companies
-│   │   ├── apple
-│   │   │   ├── fn-baz
-│   │   │   └── OWNERS # OWNERS of the publisher
-│   │   ├── google
-│   │   └── OWNERS # OWNERS to approve new company publishers
-│   ├── github-orgs
-│   └── individuals
+│   ├── kustomize
+│   │   ├── fn-foo.yaml
+│   │   ├── fn-bar.yaml
+│   │   ├── README.md
+│   │   └── OWNERS # OWNERS of the publisher
+│   ├── kubeflow
+│   ├── sig-cli
+│   └── OWNERS # OWNERS to approve new publishers
 ├── krm-functions # Home for in-tree functions source code
 │   ├── Makefile
 │   ├── kustomize
@@ -71,18 +62,16 @@ function.
 
 This section describes how to publish KRM function metadata, independent of where the source code lives. 
 
-For each function's metadata, the files are in the `publishers/` directory. This has four subdirectories: `publishers/communities/`, `publishers/companies/`, 
-`publishers/github-orgs`, and `publishers/individuals`. Depending on which category the publisher falls under, they will need
-to create their own directory under one of these four subdirectories to publish their function metadata. For example, SIG-CLI
-function metadata is under `publishers/communities/sig-cli/`. 
+For each function's metadata, the files are in the `publishers/` directory. This directory is the home for all published KRM functions metadata. Each publisher should create their own 
+subdirectory containing:
 
-Within the publisher's directory, there should be:
-- An OWNERS file to approve KRM function metadata changes for the publisher.
-- A directory for each published KRM function. This KRM function directory should contain a single file,
-  `krm-function-metadata.yaml`. This file should be a kubernetes object of type KRMFunctionDefinition, 
+- An OWNERS file containing a list of owners of the publisher
+- A README.md file with a description of who the publisher is
+- A file for each published KRM function. The KRM function metadata file should be named after the function,
+  `{FUNCTION-NAME}.yaml`. This file should be a kubernetes object of type KRMFunctionDefinition, 
   which is defined in the [Catalog KEP].
     
-An example of this is SIG-CLI's [render-helm-chart](https://github.com/kubernetes-sigs/krm-functions-registry/tree/main/publishers/communities/sig-cli/render-helm-chart) 
+An example of this is SIG-CLI's [render-helm-chart](https://github.com/kubernetes-sigs/krm-functions-registry/tree/main/publishers/sig-cli/render-helm-chart.yaml) 
 function metadata.
 
 ## General Kubernetes Contributing docs
