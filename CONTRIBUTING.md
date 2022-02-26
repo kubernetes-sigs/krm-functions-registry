@@ -11,9 +11,14 @@ _As contributors and maintainers of this project, and in the interest of fosteri
 ```
 ├── publishers # Home for all functions metadata
 │   ├── kustomize
-│   │   ├── fn-foo.yaml
-│   │   ├── fn-bar.yaml
-│   │   ├── README.md
+│   │   ├── functions
+│   │   │   ├── fn-foo.yaml
+│   │   │   ├── fn-bar.yaml
+│   │   │   └── README.md
+│   │   ├── catalogs
+│   │   │   ├── v20220225.yaml
+│   │   │   ├── v20220101.yaml
+│   │   │   └── README.md
 │   │   └── OWNERS # OWNERS of the publisher
 │   ├── kubeflow
 │   ├── sig-cli
@@ -32,47 +37,14 @@ _As contributors and maintainers of this project, and in the interest of fosteri
 
 ## Contributing in-tree KRM function source code
 
-This section discusses how to contribute KRM function source code, so that it can be managed and released by this repo.
+To contribute KRM function source code, so that it can be managed and released by this repo, follow the instructions
+in the [krm-functions directory]((https://github.com/kubernetes-sigs/krm-functions-registry/tree/main/krm-functions))
 
-For each in-tree function, the implementation is in the `krm-functions/` directory. Each publisher will need to create their own subdirectory `krm-functions/{PUBLISHER}/` 
-in this directory to store their functions source code. For example, SIG-CLI sponsored functions are located
-under `krm-functions/sig-cli/`.
-
-Each function must be in its own subdirectory `krm-functions/{PUBLISHER}/{FUNCTION NAME}/`. This directory should 
-contain: 
-- An OWNERS file to approve code changes to the function.
-- A README.md file to provide a user guide for the function.
-- Source code and unit tests.
-- A Dockerfile that describes how to build the function image.
-- An `examples/` directory. Examples that will serve both as examples for functions and as e2e tests. Each example should have its
-  own subdirectory `krm-functions/{PUBLISHER}/{FUNCTION NAME}/examples/{EXAMPLE_NAME}/`, and this directory should contain:
-  - A README.md file that serves as a guide for the example.
-  - A subdirectory `.expected`. This should contain two files:
-    - `exec.sh`: A script that will run your example. This script will be run on the example directory it is in. This can
-      be something as simple as `kustomize build --enable-alpha-plugins > resources.yaml`.
-    - `diff.patch`: This file should contain the expected diff between the original example directory files and the files 
-      after `exec.sh` is run.
-  - Any additional files needed for your examples to run. For example, if you are running `kustomize build` in your `exec.sh`
-    script, you will need a kustomization file. 
-        
-An example of this is SIG-CLI's [render-helm-chart](https://github.com/kubernetes-sigs/krm-functions-registry/tree/main/krm-functions/sig-cli/render-helm-chart) 
-function. 
 
 ## Publishing KRM function metadata in-tree and out-of-tree functions
 
-This section describes how to publish KRM function metadata, independent of where the source code lives. 
-
-For each function's metadata, the files are in the `publishers/` directory. This directory is the home for all published KRM functions metadata. Each publisher should create their own 
-subdirectory containing:
-
-- An OWNERS file containing a list of owners of the publisher
-- A README.md file with a description of who the publisher is
-- A file for each published KRM function. The KRM function metadata file should be named after the function,
-  `{FUNCTION-NAME}.yaml`. This file should be a kubernetes object of type KRMFunctionDefinition, 
-  which is defined in the [Catalog KEP].
-    
-An example of this is SIG-CLI's [render-helm-chart](https://github.com/kubernetes-sigs/krm-functions-registry/tree/main/publishers/sig-cli/render-helm-chart.yaml) 
-function metadata.
+To publish KRM function metadata, independently of where the source code lives, follow the instructions 
+in the [publishers directory](https://github.com/kubernetes-sigs/krm-functions-registry/tree/main/publishers).
 
 ## General Kubernetes Contributing docs
 

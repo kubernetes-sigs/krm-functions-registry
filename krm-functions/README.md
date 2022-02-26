@@ -3,6 +3,13 @@
 This directory is the home for the source code for all in-tree functions that are maintained and
 released by this repository. 
 
+## Requirements
+
+By donating a function's source code to this repo, you are donating the function to SIG-CLI. We cannot
+accept 3rd party functions as in-tree functions.
+
+## Files
+
 Each publisher will need to create their own subdirectory `krm-functions/{PUBLISHER}/` 
 in this directory to store their functions source code, under . For example, SIG-CLI sponsored functions are located
 under `krm-functions/sig-cli/`.
