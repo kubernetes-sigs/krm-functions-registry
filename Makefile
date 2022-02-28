@@ -20,6 +20,10 @@ e2e-test: build-local $(MYGOBIN)/kustomize
 	cd tests; \
     go test -v ./...
 
+# Run all unit tests for in-tree functions
+unit-test:
+	cd krm-functions && $(MAKE) unit-test
+
 # Build all in-tree functions locally
 build-local:
 	cd krm-functions && $(MAKE) build-local
@@ -35,10 +39,6 @@ lint:
 	cd krm-functions && find . -type f -name go.mod -execdir golangci-lint run ./... \;
 
 # TODO
-# Run all unit tests for in-tree functions
-unit-test:
-
-# TODO
 # Verify the metadata for all in-tree and out-of-tree functions
 verify-metadata:
 
@@ -46,7 +46,8 @@ verify-metadata:
 install-tools: \
 	install-kustomize \
 	install-addlicense \
-	install-golangci-lint
+	install-golangci-lint \
+	install-helm
 
 # Install kustomize
 install-kustomize:
@@ -62,3 +63,9 @@ install-addlicense:
 # Install the lint tool
 install-golangci-lint:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.44.0
+
+# Install helm v3 (needed for sig-cli/render-helm-chart)
+install-helm:
+ifeq (, $(shell which helm))
+	curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+endif
