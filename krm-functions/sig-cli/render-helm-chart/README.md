@@ -19,8 +19,6 @@ helm binary directly.
 You can learn more about helm [here][helm] and more about helm
 charts [here][charts].
 
-<!--mdtogo:Long-->
-
 ## Usage
 
 This function can be used with any KRM function orchestrators such to render a specified helm chart.
@@ -28,8 +26,6 @@ To run the function with kustomize, the `network` field is needed for remote cha
 field is needed for local charts.
 
 ### FunctionConfig
-
-<!--mdtogo:Long-->
 
 There are 2 kinds of `functionConfig` supported by this function:
 
@@ -96,7 +92,6 @@ helmCharts:
       valuesFiles: []string
       valuesInline: map[string]interface{}
       valuesMerge: string
-
 ```
 
 | Field           |  Description | Example
@@ -110,6 +105,7 @@ helmCharts:
 `name`            | The name of the chart | minecraft
 `version`         | The version of the chart | 3.1.3
 `repo`            | A URL locating the chart on the internet | https://itzg.github.io/minecraft-server-charts
+`apiVersions`     | Kubernetes api versions used for Capabilities.APIVersions | acme.cert-manager.io/v1
 `releaseName`     | Replaces RELEASE_NAME in the chart template output | test
 `namespace`       | Sets the target namespace for a release (`.Release.Namespace` in the template) | my-namespace
 `nameTemplate`    | Specify the template used to name the release | gatekeeper
@@ -119,8 +115,6 @@ helmCharts:
 `valuesInline`    | Values defined inline to use instead of default values that accompany the chart |  global: <br> &emsp; enabled: false <br> tests: <br> &emsp; enabled: false  
 `valuesFiles`     | Remote or local filepaths to use instead of the default values that accompanied the chart. The default values are in '{chartHome}/{name}/values.yaml', where `chartHome` and `name` are the parameters defined above. | Using a local values file: path/to/your/values.yaml <br> <br> Using a remote values file: https://raw.githubusercontent.com/config-sync-examples/helm-components/main/cert-manager-values.yaml
 `valuesMerge`     | ValuesMerge specifies how to treat ValuesInline with respect to ValuesFiles. Legal values: 'merge', 'override' (default), 'replace'. | replace
-
-<!--mdtogo-->
 
 [helm]: https://helm.sh/
 [charts]: https://helm.sh/docs/topics/charts/
