@@ -10,7 +10,7 @@ endif
 export PATH := $(MYGOBIN):$(PATH)
 
 # Run all tests in this repo for in-tree and out-of-tree functions
-all: install-tools license verify-metadata test-in-tree
+all: install-tools license validate-metadata test-in-tree
 
 ## Run all unit tests and e2e tests for in-tree functions
 test-in-tree: e2e-test unit-test lint
@@ -18,7 +18,12 @@ test-in-tree: e2e-test unit-test lint
 # Run all the e2e tests for in-tree functions
 e2e-test: build-local $(MYGOBIN)/kustomize
 	cd tests; \
-    go test -v ./...
+    go test -v -run TestExamples
+    
+# Validate the metadata for all published functions
+validate-metadata:
+	cd tests; \
+    go test -v -run TestValidateMetadata
 
 # Run all unit tests for in-tree functions
 unit-test:
@@ -37,10 +42,6 @@ license: $(MYGOBIN)/addlicense
 lint:
 	cd tests; golangci-lint run ./...
 	cd krm-functions && find . -type f -name go.mod -execdir golangci-lint run ./... \;
-
-# TODO
-# Verify the metadata for all in-tree and out-of-tree functions
-verify-metadata:
 
 # Install tools needed to run tests
 install-tools: \
