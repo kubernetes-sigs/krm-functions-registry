@@ -23,7 +23,7 @@ spec:
   names:
     kind: RenderHelmChart
   versions:
-    name: v1
+  - name: v1
     idempotent: true
     license: Apache 2.0
     maintainers:
@@ -70,58 +70,58 @@ spec:
             items:
               type: object
               description: parameters to configure the helm chart rendering.
-                properties:
-                  chartArgs:
-                    description: arguments that describe the chart being rendered.
-                    type: object
+              properties:
+                chartArgs:
+                  description: arguments that describe the chart being rendered.
+                  type: object
+                  properties:
+                    name:
+                      description: the name of the chart.
+                      type: string
+                    version:
+                      description: the version of the chart.
+                      type: string
+                    repo:
+                      description: URL locating the chart on the internet
+                      type: string
+                templateOptions:
+                  description: a collection of fields that map to flag options of `helm template`.
+                  type: object
+                  properties:
+                    apiVersions:
+                      description: kubernetes api versions used for Capabilities.APIVersions
+                      type: array
+                      items:
+                        type: string
+                    releaseName:
+                      description: replaces RELEASE_NAME in the chart template output
+                      type: string
+                    namespace:
+                      description: sets the target namespace for a release (`.Release.Namespace` in the template)
+                      type: string
+                    nameTemplate:
+                      description: specifies the template used to name the release
+                      type: string
+                    includeCRDs:
+                      description: specifies if Helm should also generate CustomResourceDefinitions. Legal values are "true", "false" (default).
+                      type: bool
+                    skipTests:
+                      description: if set, skip tests from templated output. Legal values are "true", "false" (default).
+                      type: bool
+                    values:
+                      description: values to use instead of the default values that accompany the chart.
+                      type: object
                       properties:
-                        name:
-                          description: the name of the chart.
-                          type: string
-                        version:
-                          description: the version of the chart.
-                          type: string
-                        repo:
-                          description: URL locating the chart on the internet
-                          type: string
-                  templateOptions:
-                    description: a collection of fields that map to flag options of `helm template`.
-                    type: object
-                      properties:
-                        apiVersions:
-                          description: kubernetes api versions used for Capabilities.APIVersions
+                        valuesFiles:
+                          description: remote or local filepaths to use instead of the default values that accompanied the chart. The default values are in '{chartHome}/{name}/values.yaml', where `chartHome` and `name` are the parameters defined above.
                           type: array
                           items:
                             type: string
-                        releaseName:
-                          description: replaces RELEASE_NAME in the chart template output
-                          type: string
-                        namespace: string
-                          description:
-                          type: string
-                        nameTemplate:
-                          description: sets the target namespace for a release (`.Release.Namespace` in the template)
-                          type: string
-                        includeCRDs:
-                          description: specifies if Helm should also generate CustomResourceDefinitions. Legal values are "true", "false" (default).
-                          type: bool
-                        skipTests:
-                          description: if set, skip tests from templated output. Legal values are "true", "false" (default).
-                          type: bool
-                        values:
-                          description: values to use instead of the default values that accompany the chart.
+                        valuesInline:
+                          description: values defined inline to use instead of default values that accompany the chart.
                           type: object
-                          properties:
-                            valuesFiles:
-                              description: remote or local filepaths to use instead of the default values that accompanied the chart. The default values are in '{chartHome}/{name}/values.yaml', where `chartHome` and `name` are the parameters defined above.
-                              type: array
-                              items:
-                                type: string
-                            valuesInline:
-                              description: values defined inline to use instead of default values that accompany the chart.
-                              type: object
-                              additionalProperties:
-                                type: string
-                            valuesMerge:
-                              description: valuesMerge specifies how to treat ValuesInline with respect to ValuesFiles. Legal values are 'merge', 'override' (default), 'replace'.
-                              type: string
+                          additionalProperties:
+                            type: string
+                        valuesMerge:
+                          description: valuesMerge specifies how to treat ValuesInline with respect to ValuesFiles. Legal values are 'merge', 'override' (default), 'replace'.
+                          type: string
