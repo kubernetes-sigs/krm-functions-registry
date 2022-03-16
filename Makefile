@@ -43,6 +43,10 @@ lint:
 	cd tests; golangci-lint run ./...
 	cd krm-functions && find . -type f -name go.mod -execdir golangci-lint run ./... \;
 
+# Release all in-tree functions
+release:
+	cd krm-functions && $(MAKE) release
+
 # Install tools needed to run tests
 install-tools: \
 	install-kustomize \

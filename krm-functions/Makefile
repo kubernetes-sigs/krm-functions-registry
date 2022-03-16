@@ -11,3 +11,9 @@ build-local:
 # Run all unit tests for in-tree functions
 unit-test:
 	./scripts/unit-test.sh
+
+# Releases the function name provided (must include publisher name)
+# You can specify to release a patch, minor, or major version. The default
+# is patch.
+release:
+	./scripts/release.sh $(FUNCTION_NAME) $(RELEASE_TYPE)
